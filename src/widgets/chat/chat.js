@@ -189,7 +189,7 @@ export default class ChatWidget {
     return `
       <div class="dialog-login">
         <div class="overlay" id="overlay"></div>
-        <form class="form-ticket row g-3">
+        <form class="form-login row g-3">
           <div class="col-12 d-flex justify-content-center">
             <h5 class="form-title">Выберите псевдоним</h5>
           </div>
@@ -280,6 +280,10 @@ export default class ChatWidget {
     return '.submit-button';
   }
 
+  static get formLoginSelector() {
+    return '.form-login';
+  }
+
   // Запуск виджета
   run() {
     if (!this.ws) {
@@ -289,6 +293,9 @@ export default class ChatWidget {
 
     // Отрисовка HTML
     this.bindToDOM();
+
+    // Инициализация событий
+    this.initEvents();
   }
 
   // Разметка HTML и отслеживание событий
@@ -299,40 +306,37 @@ export default class ChatWidget {
     this.parentEl.innerHTML += ChatWidget.formLoginHTML;
     this.parentEl.innerHTML += ChatWidget.formChatHTML;
 
-    const formProcess = this.parentEl.querySelector(HelpDeskWidget.loadingSelector);
-    const formError = this.parentEl.querySelector(HelpDeskWidget.dialogErrorSelector);
-    this.XHR = new RequestSender(this.urlServer,
-      {
-        form: formProcess,
-        hide: STYLE_HIDDEN,
-      },
-      {
-        form: formError,
-        hide: STYLE_HIDDEN,
-      });
+    // const formProcess = this.parentEl.querySelector(HelpDeskWidget.loadingSelector);
+    // const formError = this.parentEl.querySelector(HelpDeskWidget.dialogErrorSelector);
+    // this.XHR = new RequestSender(this.urlServer,
+    //   {
+    //     form: formProcess,
+    //     hide: STYLE_HIDDEN,
+    //   },
+    //   {
+    //     form: formError,
+    //     hide: STYLE_HIDDEN,
+    //   });
 
-    this.tasksList.items = await this.XHR.getAllTickets();
+    // this.tasksList.items = await this.XHR.getAllTickets();
 
-    this.parentEl.innerHTML += HelpDeskWidget.tasksListHTML(this.tasksList);
-    this.tasksListItems = this.parentEl.querySelector(HelpDeskWidget.listItemsSelector);
+    // this.parentEl.innerHTML += HelpDeskWidget.tasksListHTML(this.tasksList);
+    // this.tasksListItems = this.parentEl.querySelector(HelpDeskWidget.listItemsSelector);
 
-    this.initEvents();
+    // this.initEvents();
   }
 
   initEvents() {
-    // Обработка событий по нажатию на кнопку добавить Тикет
-    const buttonNewItem = this.parentEl.querySelector(HelpDeskWidget.itemAddSelector);
-    this.onClickNewItem = this.onClickNewItem.bind(this);
-    buttonNewItem.addEventListener('click', this.onClickNewItem);
+    // Обработка событий по вводу псевдонима
+    const formLogin = this.parentEl.querySelector(ChatWidget.formLoginSelector);
+    this.onSubmitLogin = this.onSubmitLogin.bind(this);
+    formLogin.addEventListener('click', this.onSubmitLogin);
 
-    // Обработка событий на каждой задаче и списка
-    this.initItemsEvents();
+
   }
 
-  initItemsEvents() {
-    // Отработка событий на каждой задаче из списка
-    const items = this.tasksListItems.querySelectorAll(HelpDeskWidget.itemSelector);
-    items.forEach((item) => this.initItemEvents(item));
+  onSubmitLogin() {
+    
   }
 
   initItemEvents(item) {
