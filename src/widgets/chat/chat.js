@@ -8,7 +8,7 @@ export default class ChatWidget {
   constructor(parentEl, urlWebSocket) {
     this.parentEl = parentEl;
     this.urlWebSocket = urlWebSocket;
-    this.ws = new WebSocket(this.urlWebSocket);
+    this.ws = null;
   }
 
   static itemHTML(item) {
@@ -284,18 +284,46 @@ export default class ChatWidget {
     return '.form-login';
   }
 
-  // Запуск виджета
-  run() {
-    if (!this.ws) {
-      console.error('WebSocket does not exists!');
-      return;
-    }
+  wsConnect() {
+    if (this.ws) {
+      this.ws.close(3001);
+    } else {
+      this.ws = new WebSocket(this.urlWebSocket);
 
+      this.ws.onopen = function() {
+        console.log(`Соединение установлено. URL: ${this.urlWebSocket}`);
+      };
+      
+      this.ws.onclose = function(event) {
+        if (event.wasClean) {
+          console.log('Соединение закрыто чисто');
+          this.ws = null;
+        } else {
+          console.log('Обрыв соединения');
+        }
+        console.log(`Код: ${event.code}; причина: ${event.reason}`);
+      };
+      
+      this.ws.onmessage = function(event) {
+        console.log(`Получены данные: ${event.data}`);
+      };
+      
+      this.ws.onerror = function(error) {
+        console.log(`Ошибка: ${error.message}`);
+      };
+    }
+  }
+
+  // Запуск виджета
+  run() {    
     // Отрисовка HTML
     this.bindToDOM();
 
     // Инициализация событий
     this.initEvents();
+
+    // Соединяемся с сокетом
+    this.wsConnect();
   }
 
   // Разметка HTML и отслеживание событий
@@ -330,13 +358,11 @@ export default class ChatWidget {
     // Обработка событий по вводу псевдонима
     const formLogin = this.parentEl.querySelector(ChatWidget.formLoginSelector);
     this.onSubmitLogin = this.onSubmitLogin.bind(this);
-    formLogin.addEventListener('click', this.onSubmitLogin);
-
-
+    formLogin.addEventListener('submit', (evt) => this.onSubmitLogin(evt));
   }
 
-  onSubmitLogin() {
-    
+  onSubmitLogin(evt) {
+    evt.preventDefault();
   }
 
   initItemEvents(item) {
