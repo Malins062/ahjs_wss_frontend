@@ -77,8 +77,7 @@
   background-color: green !important;
 }
 
-.form-ticket-delete,
-.form-ticket {
+.form-login {
   /* display: block; */
   position: absolute;
   top:  50%;
