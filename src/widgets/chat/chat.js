@@ -1,5 +1,4 @@
 import './chat.css';
-// import RequestSender from './requestsender';
 
 // Наименование стиля для скрытия объекта
 const STYLE_HIDDEN = 'hidden';
@@ -9,44 +8,6 @@ export default class ChatWidget {
     this.parentEl = parentEl;
     this.urlWebSocket = urlWebSocket;
     this.ws = null;
-  }
-
-  static itemHTML(item) {
-    const html = `
-        <li class="tasks__item list-group-item mb-2" draggable="true" data-id="${item.id}">
-          <div class="row d-flex">
-            <div class="col-md-1">
-              <div class="form-check">
-                <input class="item__status form-check-input" type="checkbox" value="" id="flexCheckChecked" ${item.status ? 'checked' : ''}>
-              </div>
-            </div>
-            <div class="col-md-7 d-flex justify-content-start">
-              <h6 class="item__name mb-0">${item.name}</h6>
-            </div>
-            <div class="col-md-3 d-flex justify-content-center">
-              <h6 class="item__name mb-0">${item.created}</h6>
-            </div>
-            <div class="col-md-1 d-flex justify-content-end">
-              <button class="item__edit btn btn-primary btn-sm" title="Редактировать задачу">&#9998;</button>
-              <button class="item__delete btn btn-danger btn-sm ms-1" data-bs-toggle="modal" 
-                data-bs-target="#deleteTicketDialog" title="Удалить задачу">&#10005;</button>
-          </div>         
-          <div class="col-md-1"></div>
-          <div class="item__description col-md-7 hidden">
-            <p></p>
-          </div>
-        </li>`;
-    return html;
-  }
-
-  static itemsHTML(items) {
-    let html = '';
-    if (items) {
-      items.forEach((item) => {
-        html += this.itemHTML(item);
-      });
-    }
-    return html;
   }
 
   static get formChatHTML() {
@@ -208,78 +169,6 @@ export default class ChatWidget {
     return `[data-id="${id}"]`;
   }
 
-  static get itemAddSelector() {
-    return '.item__add';
-  }
-
-  static get itemSelector() {
-    return '.tasks__item';
-  }
-
-  static get listItemsSelector() {
-    return '.tasks__list';
-  }
-
-  static get delItemSelector() {
-    return '.item__delete';
-  }
-
-  static get editItemSelector() {
-    return '.item__edit';
-  }
-
-  static get loadingSelector() {
-    return '.form-processing';
-  }
-
-  static get descriptionItemSelector() {
-    return '.item__description';
-  }
-
-  static get nameItemSelector() {
-    return '.item__name';
-  }
-
-  static get statusItemSelector() {
-    return '.item__status';
-  }
-
-  static get formTicketSelector() {
-    return '.form-ticket';
-  }
-
-  static get formTicketDeleteSelector() {
-    return '.form-ticket-delete';
-  }
-
-  static get formTitleSelector() {
-    return '.form-title';
-  }
-
-  static get dialogLoadingSelector() {
-    return '.dialog-loading';
-  }
-
-  static get dialogErrorSelector() {
-    return '.dialog-error';
-  }
-
-  static get dialogDeleteSelector() {
-    return '.dialog-delete';
-  }
-
-  static get dialogAddEditSelector() {
-    return '.dialog-add-edit';
-  }
-
-  static get cancelButtonSelector() {
-    return '.cancel-button';
-  }
-
-  static get submitButtonSelector() {
-    return '.submit-button';
-  }
-
   static get formLoginSelector() {
     return '.form-login';
   }
@@ -288,29 +177,19 @@ export default class ChatWidget {
     if (this.ws) {
       this.ws.close(3001);
     } else {
-      this.ws = new WebSocket(this.urlWebSocket);
+      this.ws = new WebSocket(this.urlWebSocket);      
 
-      this.ws.onopen = function() {
-        console.log(`Соединение установлено. URL: ${this.urlWebSocket}`);
-      };
+      this.wsOpen = this.wsOpen.bind(this);
+      this.ws.addEventListener('open', this.wsOpen);
+
+      this.wsClose = this.wsClose.bind(this);
+      this.ws.addEventListener('close', (evt) => this.wsClose(evt));
       
-      this.ws.onclose = function(event) {
-        if (event.wasClean) {
-          console.log('Соединение закрыто чисто');
-          this.ws = null;
-        } else {
-          console.log('Обрыв соединения');
-        }
-        console.log(`Код: ${event.code}; причина: ${event.reason}`);
-      };
+      this.wsMessage = this.wsMessage.bind(this);
+      this.ws.addEventListener('message', (message) => this.wsMessage(message));
       
-      this.ws.onmessage = function(event) {
-        console.log(`Получены данные: ${event.data}`);
-      };
-      
-      this.ws.onerror = function(error) {
-        console.log(`Ошибка: ${error.message}`);
-      };
+      this.wsError = this.wsError.bind(this);
+      this.ws.addEventListener('error', (evt) => this.wsError(evt));      
     }
   }
 
@@ -327,31 +206,12 @@ export default class ChatWidget {
   }
 
   // Разметка HTML и отслеживание событий
-  async bindToDOM() {
+  bindToDOM() {
     this.parentEl.innerHTML = '';
     this.parentEl.innerHTML += ChatWidget.loadingHTML;
     this.parentEl.innerHTML += ChatWidget.formErrorHTML;
     this.parentEl.innerHTML += ChatWidget.formLoginHTML;
     this.parentEl.innerHTML += ChatWidget.formChatHTML;
-
-    // const formProcess = this.parentEl.querySelector(HelpDeskWidget.loadingSelector);
-    // const formError = this.parentEl.querySelector(HelpDeskWidget.dialogErrorSelector);
-    // this.XHR = new RequestSender(this.urlServer,
-    //   {
-    //     form: formProcess,
-    //     hide: STYLE_HIDDEN,
-    //   },
-    //   {
-    //     form: formError,
-    //     hide: STYLE_HIDDEN,
-    //   });
-
-    // this.tasksList.items = await this.XHR.getAllTickets();
-
-    // this.parentEl.innerHTML += HelpDeskWidget.tasksListHTML(this.tasksList);
-    // this.tasksListItems = this.parentEl.querySelector(HelpDeskWidget.listItemsSelector);
-
-    // this.initEvents();
   }
 
   initEvents() {
@@ -361,169 +221,32 @@ export default class ChatWidget {
     formLogin.addEventListener('submit', (evt) => this.onSubmitLogin(evt));
   }
 
+  wsOpen() {
+    console.log(`Соединение установлено. URL: ${this.urlWebSocket}`);
+  }
+
+  wsClose(evt) {
+    if (evt.wasClean) {
+      console.log('Соединение закрыто.');
+      this.ws = null;
+    } else {
+      console.log('Обрыв соединения!');
+    }
+    console.log(`Код: ${evt.code}; причина: ${evt.reason}`);
+  }
+
+  wsMessage(message) {
+    console.log('Сообщение:', message);
+    const data = JSON.parse(message.data);
+    console.log('Получены данные:', (data));
+  }
+
+  wsError(evt) {
+    console.log(`Ошибка: ${evt.message}`);
+  }
+
   onSubmitLogin(evt) {
     evt.preventDefault();
   }
 
-  initItemEvents(item) {
-    const idItem = item.dataset.id;
-
-    // Событие по клику задачу
-    item.addEventListener('click', async () => {
-      const divDescription = item.querySelector(HelpDeskWidget.descriptionItemSelector);
-
-      if (!divDescription) {
-        return;
-      }
-
-      if (divDescription.classList.contains(STYLE_HIDDEN)) {
-        const pDescription = divDescription.querySelector('p');
-        const itemData = await this.XHR.getTicket(idItem);
-        pDescription.innerText = itemData ? itemData.description : '';
-      }
-
-      divDescription.classList.toggle(STYLE_HIDDEN);
-    });
-
-    // Событие изменения статуса задачи
-    const statusItem = item.querySelector(HelpDeskWidget.statusItemSelector);
-    statusItem.addEventListener('click', async (evt) => {
-      evt.stopPropagation();
-      const body = `status=${statusItem.checked}`;
-      await this.XHR.setStatusTicket(idItem, body);
-    });
-
-    // Событие удаления задачи
-    const deleteItem = item.querySelector(HelpDeskWidget.delItemSelector);
-    deleteItem.addEventListener('click', (evt) => {
-      evt.stopPropagation();
-      evt.preventDefault();
-      this.onClickDeleteItem(idItem);
-    });
-
-    // Событие редактирования задачи
-    const editItem = item.querySelector(HelpDeskWidget.editItemSelector);
-    editItem.addEventListener('click', async (evt) => {
-      evt.stopPropagation();
-      evt.preventDefault();
-      const itemData = await this.XHR.getTicket(idItem);
-      this.onClickEditItem(itemData);
-    });
-  }
-
-  async onClickNewItem() {
-    const dialog = this.parentEl.querySelector(HelpDeskWidget.dialogAddEditSelector);
-    dialog.classList.remove(STYLE_HIDDEN);
-
-    // Заголовок формы
-    const titleForm = dialog.querySelector(HelpDeskWidget.formTitleSelector);
-    titleForm.innerText = FORMS.titles.add;
-
-    // Имя тикета
-    const inputName = dialog.querySelector(HelpDeskWidget.idSelector(FORMS.idInputName));
-    inputName.value = '';
-
-    // Описание тикета
-    const inputDescription = dialog.querySelector(
-      HelpDeskWidget.idSelector(FORMS.idInputDescription),
-    );
-    inputDescription.value = '';
-
-    // Отработка кнопки "Отмена" для всех форм кроме формы отображения ошибки
-    const cancelButton = dialog.querySelector(HelpDeskWidget.cancelButtonSelector);
-    cancelButton.addEventListener('click', () => dialog.classList.add(STYLE_HIDDEN));
-
-    // Отработка подтверждения формы
-    dialog.addEventListener('submit', async (evt) => {
-      evt.preventDefault();
-
-      const body = `name=${encodeURIComponent(inputName.value)}&description=${encodeURIComponent(inputDescription.value)}`;
-      const result = await this.XHR.addTicket(body);
-
-      dialog.classList.add(STYLE_HIDDEN);
-
-      if (result !== undefined && result !== null && result.constructor === Object) {
-        this.addItemHTML(result);
-      }
-    });
-  }
-
-  async onClickEditItem(item) {
-    const dialog = this.parentEl.querySelector(HelpDeskWidget.dialogAddEditSelector);
-    dialog.classList.remove(STYLE_HIDDEN);
-
-    // Заголовок формы
-    const titleForm = dialog.querySelector(HelpDeskWidget.formTitleSelector);
-    titleForm.innerText = FORMS.titles.change;
-
-    // Имя тикета
-    const inputName = dialog.querySelector(HelpDeskWidget.idSelector(FORMS.idInputName));
-    inputName.value = item ? item.name : '';
-
-    // Описание тикета
-    const inputDescription = dialog.querySelector(
-      HelpDeskWidget.idSelector(FORMS.idInputDescription),
-    );
-    inputDescription.value = item ? item.description : '';
-
-    // Отработка кнопки "Отмена" для всех форм кроме формы отображения ошибки
-    const cancelButton = dialog.querySelector(HelpDeskWidget.cancelButtonSelector);
-    cancelButton.addEventListener('click', () => dialog.classList.add(STYLE_HIDDEN));
-
-    // Отработка подтверждения формы
-    dialog.addEventListener('submit', async (evt) => {
-      evt.preventDefault();
-
-      const body = `name=${inputName.value}&description=${inputDescription.value}`;
-      const result = await this.XHR.changeTicket(item.id, body);
-
-      dialog.classList.add(STYLE_HIDDEN);
-
-      if (result !== undefined && result !== null && result.constructor === Object) {
-        // console.log('Изменение задачи id=', result.id, ' result=', result);
-        this.changeItemHTML(result);
-      }
-    });
-  }
-
-  async onClickDeleteItem(id) {
-    const dialog = this.parentEl.querySelector(HelpDeskWidget.dialogDeleteSelector);
-    dialog.classList.remove(STYLE_HIDDEN);
-
-    // Отработка кнопки "Отмена" для всех форм кроме формы отображения ошибки
-    const cancelButton = dialog.querySelector(HelpDeskWidget.cancelButtonSelector);
-    cancelButton.addEventListener('click', () => dialog.classList.add(STYLE_HIDDEN));
-
-    // Отработка подтверждения формы
-    dialog.addEventListener('submit', async (evt) => {
-      evt.preventDefault();
-
-      const result = await this.XHR.deleteTicket(id);
-
-      dialog.classList.add(STYLE_HIDDEN);
-
-      if (result !== undefined && result !== null && result.constructor === Object) {
-        // console.log('Удаление задачи id=', result.id, ' result=', result);
-        this.deleteItemHTML(result.id);
-      }
-    });
-  }
-
-  addItemHTML(item) {
-    const itemHTML = HelpDeskWidget.itemHTML(item);
-    this.tasksListItems.insertAdjacentHTML('beforeEnd', itemHTML);
-    const liItem = this.tasksListItems.querySelector(HelpDeskWidget.idSelector(item.id));
-    this.initItemEvents(liItem);
-  }
-
-  deleteItemHTML(id) {
-    const liItem = this.tasksListItems.querySelector(HelpDeskWidget.idSelector(id));
-    liItem.remove();
-  }
-
-  changeItemHTML(item) {
-    const liItem = this.tasksListItems.querySelector(HelpDeskWidget.idSelector(item.id));
-    const itemName = liItem.querySelector(HelpDeskWidget.nameItemSelector);
-    itemName.innerText = item.name;
-  }
 }
