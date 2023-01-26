@@ -24,25 +24,11 @@ export default class ChatWidget {
             <div class="card">
               <div class="card-body">
     
-                <ul class="list-unstyled mb-0">
+                <ul class="list-unstyled mb-0" data-id="users">
                   <li class="p-2 border-bottom" style="background-color: #eee;">
                     <div class="d-flex flex-row">
                       <div class="pt-1">
                         <p class="fw-bold mb-0">Вы</p>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="p-2 border-bottom">
-                    <div class="d-flex flex-row">
-                      <div class="pt-1">
-                        <p class="fw-bold mb-0">Danny Smith</p>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="p-2 border-bottom">
-                    <div class="d-flex flex-row">
-                      <div class="pt-1">
-                        <p class="fw-bold mb-0">Alex Steward</p>
                       </div>
                     </div>
                   </li>
@@ -198,11 +184,11 @@ export default class ChatWidget {
     // Отрисовка HTML
     this.bindToDOM();
 
-    // Инициализация событий
-    this.initEvents();
-
     // Соединяемся с сокетом
     this.wsConnect();
+
+    // Инициализация событий
+    this.initEvents();
   }
 
   // Разметка HTML и отслеживание событий
@@ -212,6 +198,8 @@ export default class ChatWidget {
     this.parentEl.innerHTML += ChatWidget.formErrorHTML;
     this.parentEl.innerHTML += ChatWidget.formLoginHTML;
     this.parentEl.innerHTML += ChatWidget.formChatHTML;
+
+    this.ulUsers = this.parentEl.querySelector(ChatWidget.idSelector('users'));
   }
 
   initEvents() {
@@ -239,6 +227,13 @@ export default class ChatWidget {
     console.log('Сообщение:', message);
     const data = JSON.parse(message.data);
     console.log('Получены данные:', (data));
+
+    if (data.renderUsers) {
+      this.users = data.names;
+      this.users.forEach((name) => {
+        this.ulUsers.appendChild(new User(name).render());
+      });
+    }
   }
 
   wsError(evt) {

@@ -1,4 +1,4 @@
-import User from './components/User';
+import User from '../widgets/chat/user';
 import Message from './components/Message';
 
 window.onload = () => {

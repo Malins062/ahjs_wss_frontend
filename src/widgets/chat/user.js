@@ -16,4 +16,17 @@ export default class User {
     this.userEl.appendChild(this.usernameEl);
     return this.userEl;
   }
+
+  renderHTML() {
+    const html = `
+      <li class="p-2 border-bottom" style="background-color: #eee;">
+        <div class="d-flex flex-row">
+          <div class="pt-1">
+            <p class="fw-bold mb-0">Вы</p>
+          </div>
+        </div>
+      </li>
+    `
+    return html;
+  }
 }
