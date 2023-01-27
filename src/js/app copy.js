@@ -1,5 +1,5 @@
 import User from '../widgets/chat/user';
-import Message from './components/Message';
+import Message from '../widgets/chat/message';
 
 window.onload = () => {
   const ws = new WebSocket('ws://localhost:7070');

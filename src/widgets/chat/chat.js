@@ -18,9 +18,9 @@ export default class ChatWidget {
     
         <div class="row">
     
-          <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
+          <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0 border rounded-start">
     
-            <h5 class="font-weight-bold mb-3 text-center text-lg-start">Участники</h5>
+            <h6 class="font-weight-bold mb-3 text-center text-lg-start">Участники</h5>
     
             <div class="card">
               <div class="card-body">
@@ -33,40 +33,26 @@ export default class ChatWidget {
     
           </div>
     
-          <div class="col-md-6 col-lg-7 col-xl-8">
-    
-            <ul class="list-unstyled">
-              <li class="d-flex justify-content-between mb-4">
+          <div class="col-md-6 col-lg-7 col-xl-8 border rounded-3">
+   
+            <h6 class="font-weight-bold mb-3 text-center text-lg-start">Сообщения</h5>
+
+            <ul class="list-unstyled" data-id="messages">
+              <li class="d-flex justify-content-start text-left mb-1">
                 <div class="card">
-                  <div class="card-header d-flex justify-content-between p-3">
-                    <p class="fw-bold mb-0">Brad Pitt</p>
-                    <p class="text-muted small mb-0"><i class="far fa-clock"></i> 12 mins ago</p>
+                  <div class="card-header d-flex justify-content-start p-1">
+                    <p class="fw-bold small mb-0 mx-1">Brad Pitt</p>
+                    <p class="text-muted small mb-0">12 mins ago</p>
                   </div>
                   <div class="card-body">
-                    <p class="mb-0">
+                    <p class="mb-0 text-start">
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                       labore et dolore magna aliqua.
                     </p>
                   </div>
                 </div>
               </li>
-              <li class="d-flex justify-content-between mb-4">
-                <div class="card w-100">
-                  <div class="card-header d-flex justify-content-between p-3">
-                    <p class="fw-bold mb-0">Lara Croft</p>
-                    <p class="text-muted small mb-0"><i class="far fa-clock"></i> 13 mins ago</p>
-                  </div>
-                  <div class="card-body">
-                    <p class="mb-0">
-                      Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                      laudantium.
-                    </p>
-                  </div>
-                </div>
-              </li>
-              <li class="d-flex justify-content-between mb-4">
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
-                  class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
+              <li class="d-flex justify-content-end mb-4">
                 <div class="card">
                   <div class="card-header d-flex justify-content-between p-3">
                     <p class="fw-bold mb-0">Brad Pitt</p>
