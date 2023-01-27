@@ -6,23 +6,19 @@ export default class User {
 
   render() {
     const liEl = document.createElement('li');
-    liEl.className = 'p-2 border-bottom';
+    liEl.className = 'p-0';
     if  (this.isOwner) {
       liEl.style.backgroundColor = '#eee';
     };
 
-    const divEl1 = document.createElement('div');
-    divEl1.className = 'd-flex flex-row';
-
-    const divEl2 = document.createElement('div');
-    divEl2.className = 'pt-1';
+    const divEl = document.createElement('div');
+    divEl.className = 'd-flex flex-row';
 
     const userNameEl = document.createElement('p');
     userNameEl.className = 'fw-bold mb-0';
     userNameEl.textContent = this.userName;
 
-    liEl.appendChild(divEl1);
-    liEl.appendChild(divEl2);
+    liEl.appendChild(divEl);
     liEl.appendChild(userNameEl);
     return liEl;
   }
