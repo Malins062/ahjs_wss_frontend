@@ -1,4 +1,5 @@
 import './chat.css';
+import User from './user';
 
 // Наименование стиля для скрытия объекта
 const STYLE_HIDDEN = 'hidden';
@@ -25,13 +26,6 @@ export default class ChatWidget {
               <div class="card-body">
     
                 <ul class="list-unstyled mb-0" data-id="users">
-                  <li class="p-2 border-bottom" style="background-color: #eee;">
-                    <div class="d-flex flex-row">
-                      <div class="pt-1">
-                        <p class="fw-bold mb-0">Вы</p>
-                      </div>
-                    </div>
-                  </li>
                 </ul>
     
               </div>
