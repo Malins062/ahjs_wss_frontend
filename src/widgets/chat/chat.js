@@ -241,6 +241,12 @@ export default class ChatWidget {
       console.log('Имя занято. Выберите другое имя.');
     }
 
+    if (data.renderName) {
+      this.ulUsers.appendChild(new User(data.name).render());
+      return;
+    }
+
+
   }
 
   wsError(evt) {
