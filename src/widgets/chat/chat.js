@@ -4,6 +4,9 @@ import User from './user';
 // Наименование стиля для скрытия объекта
 const STYLE_HIDDEN = 'hidden';
 
+// Стиль bootstrap для невалидного объекта
+const STYLE_IS_INVALID = 'is-invalid';
+
 export default class ChatWidget {
   constructor(parentEl, urlWebSocket) {
     this.parentEl = parentEl;
@@ -105,7 +108,7 @@ export default class ChatWidget {
             <p></p>
           </div>
           <div class="col-12 d-flex justify-content-end">
-            <button type="submit" value="submit" class="submit-buttom btn btn-primary ms-2">ОК</button>
+            <button type="submit" value="submit" class="submit-buttom btn btn-primary ms-2">OK</button>
           </div>
         </form>
       </div>
@@ -114,14 +117,17 @@ export default class ChatWidget {
 
   static get formLoginHTML() {
     return `
-      <div class="dialog-login">
+      <div class="dialog-login" data-id="dialog-login">
         <div class="overlay" id="overlay"></div>
-        <form class="form-login row g-3">
+        <form class="form-login row g-3" data-id="form-login">
           <div class="col-12 d-flex justify-content-center">
             <h5 class="form-title">Выберите псевдоним</h5>
           </div>
           <div class="col-12">
-            <input type="text" class="form-control" required placeholder="Введите Ваше имя">
+            <input type="text" class="form-control" data-id = "username" required placeholder="Введите Ваше имя">
+            <div class="invalid-feedback">
+              Заданное имя уже занято. Выберите другое имя.
+            </div>
           </div>
           <div class="col-12 d-flex justify-content-center">
             <button type="submit" value="submit" class="submit-buttom btn btn-primary ms-2">Продолжить</button>
@@ -167,8 +173,8 @@ export default class ChatWidget {
     // Соединяемся с сокетом
     this.wsConnect();
 
-    // Инициализация событий
-    this.initEvents();
+    // Инициализация переменных и событий
+    this.init();
   }
 
   // Разметка HTML и отслеживание событий
@@ -178,13 +184,20 @@ export default class ChatWidget {
     this.parentEl.innerHTML += ChatWidget.formErrorHTML;
     this.parentEl.innerHTML += ChatWidget.formLoginHTML;
     this.parentEl.innerHTML += ChatWidget.formChatHTML;
-
-    this.ulUsers = this.parentEl.querySelector(ChatWidget.idSelector('users'));
   }
 
-  initEvents() {
-    // Обработка событий по вводу псевдонима
-    const formLogin = this.parentEl.querySelector(ChatWidget.formLoginSelector);
+  init() {
+    this.ulUsers = this.parentEl.querySelector(ChatWidget.idSelector('users'));
+    this.dialogLogin = this.parentEl.querySelector(ChatWidget.idSelector('dialog-login'));
+
+
+    // Строка ввода имени псевдонима
+    this.inputUserName = this.parentEl.querySelector(ChatWidget.idSelector('username'));
+    this.onChangeUserName = this.onChangeUserName.bind(this);
+    this.inputUserName.addEventListener('keydown', this.onChangeUserName);
+
+    // Обработка событий по подтверждению вводу псевдонима
+    const formLogin = this.dialogLogin.querySelector(ChatWidget.idSelector('form-login'));
     this.onSubmitLogin = this.onSubmitLogin.bind(this);
     formLogin.addEventListener('submit', (evt) => this.onSubmitLogin(evt));
   }
@@ -214,6 +227,20 @@ export default class ChatWidget {
         this.ulUsers.appendChild(new User(name).render());
       });
     }
+
+    if (data.nameIsFree) {
+      this.dialogLogin.classList.add(STYLE_HIDDEN);
+      const user = new User(data.name).render();
+      this.ulUsers.appendChild(user);
+      // document.querySelector(
+      //   '.current-user',
+      // ).childNodes[1].textContent = `${user.textContent} <-- You`;
+    } else if (data.nameIsFree === false) {
+      // popupOverlay.classList.remove('hidden');
+      this.inputUserName.classList.add(STYLE_IS_INVALID);
+      console.log('Имя занято. Выберите другое имя.');
+    }
+
   }
 
   wsError(evt) {
@@ -222,6 +249,16 @@ export default class ChatWidget {
 
   onSubmitLogin(evt) {
     evt.preventDefault();
+    // console.log(this.inputUserName)
+    const userName = this.inputUserName.value;
+    this.ws.send(JSON.stringify({ userName, chooseUserName: true }));
+    // evt.currentTarget.reset();    
+  }
+
+  onChangeUserName() {
+    if (this.inputUserName.classList.contains(STYLE_IS_INVALID)) {
+      this.inputUserName.classList.remove(STYLE_IS_INVALID);
+    }
   }
 
 }
