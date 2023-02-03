@@ -221,6 +221,7 @@ export default class ChatWidget {
     const data = JSON.parse(message.data);
     console.log('Получены данные:', (data));
 
+    // Отрисовка всех текущих пользователей
     if (data.renderUsers) {
       this.users = data.names;
       this.users.forEach((name) => {
@@ -228,22 +229,29 @@ export default class ChatWidget {
       });
     }
 
+    // Проверка: занято ли имя пользователя или нет
     if (data.nameIsFree) {
       this.dialogLogin.classList.add(STYLE_HIDDEN);
-      const user = new User(data.name).render();
+      const user = new User(data.name, true).render();
       this.ulUsers.appendChild(user);
-      // document.querySelector(
-      //   '.current-user',
-      // ).childNodes[1].textContent = `${user.textContent} <-- You`;
     } else if (data.nameIsFree === false) {
-      // popupOverlay.classList.remove('hidden');
       this.inputUserName.classList.add(STYLE_IS_INVALID);
-      console.log('Имя занято. Выберите другое имя.');
     }
 
+    // Добавился новый пользователь
     if (data.renderName) {
       this.ulUsers.appendChild(new User(data.name).render());
       return;
+    }
+
+    // Выход пользователя из чата
+    if (data.closeUser) {
+      const usersArray = [...document.querySelectorAll('.user')];
+      usersArray.forEach((user) => {
+        if (user.querySelector('.user__name').textContent === data.name) {
+          user.remove();
+        }
+      });
     }
 
 

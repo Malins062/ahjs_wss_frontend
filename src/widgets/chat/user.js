@@ -1,3 +1,5 @@
+const NAME_OWNER = 'Вы';
+
 export default class User {
   constructor(name, isOwner=false) {
     this.userName = name;
@@ -15,8 +17,13 @@ export default class User {
     divEl.className = 'd-flex flex-row';
 
     const userNameEl = document.createElement('p');
-    userNameEl.className = 'fw-bold mb-0';
-    userNameEl.textContent = this.userName;
+    if (this.isOwner) {
+      userNameEl.className = 'fw-bold mb-0';
+      userNameEl.textContent = NAME_OWNER;
+    } else {
+      userNameEl.className = 'mb-0';
+      userNameEl.textContent = this.userName;
+    }
 
     liEl.appendChild(divEl);
     liEl.appendChild(userNameEl);
