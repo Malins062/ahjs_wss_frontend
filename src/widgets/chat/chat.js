@@ -246,7 +246,7 @@ export default class ChatWidget {
 
     // Выход пользователя из чата
     if (data.closeUser) {
-      const usersArray = [...document.querySelectorAll('.user')];
+      const usersArray = [...this.ulUsers.querySelectorAll('li')];
       usersArray.forEach((user) => {
         if (user.querySelector('.user__name').textContent === data.name) {
           user.remove();

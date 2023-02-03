@@ -8,7 +8,7 @@ export default class User {
 
   render() {
     const liEl = document.createElement('li');
-    liEl.className = 'p-0';
+    liEl.className = 'p-0 user';
     if  (this.isOwner) {
       liEl.style.backgroundColor = '#eee';
     };
@@ -17,11 +17,11 @@ export default class User {
     divEl.className = 'd-flex flex-row';
 
     const userNameEl = document.createElement('p');
+    userNameEl.className = 'mb-0 user__name';
     if (this.isOwner) {
-      userNameEl.className = 'fw-bold mb-0';
       userNameEl.textContent = NAME_OWNER;
+      userNameEl.classList.add('fw-bold');
     } else {
-      userNameEl.className = 'mb-0';
       userNameEl.textContent = this.userName;
     }
 
