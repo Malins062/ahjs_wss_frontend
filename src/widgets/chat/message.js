@@ -1,7 +1,10 @@
+const NAME_OWNER = 'Вы';
+
 export default class Message {
-  constructor(username, message, date) {
+  constructor(username, message, date, isOwner=false) {
     this.username = username;
     this.message = message;
+    this.isOwner = isOwner;
     this.date = new Date(date);
   }
 

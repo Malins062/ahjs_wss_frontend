@@ -29,17 +29,4 @@ export default class User {
     liEl.appendChild(userNameEl);
     return liEl;
   }
-
-  HTML() {
-    const html = `
-      <li class="p-2 border-bottom" ${this.isOwner ? 'style="background-color: #eee;"' : ''}>
-        <div class="d-flex flex-row">
-          <div class="pt-1">
-            <p class="fw-bold mb-0">${this.userName}</p>
-          </div>
-        </div>
-      </li>
-    `
-    return html;
-  }
 }

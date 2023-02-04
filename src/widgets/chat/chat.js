@@ -254,6 +254,29 @@ export default class ChatWidget {
       });
     }
 
+    if (data.renderOwnMessage) {
+      const ownMessage = new Message(
+        data.name,
+        data.message,
+        data.date,
+      ).render();
+      ownMessage.classList.add('own-message');
+      messages.appendChild(ownMessage);
+    }
+
+    // if (data.renderMessage) {
+    //   messages.appendChild(
+    //     new Message(data.name, data.message, data.date).render(),
+    //   );
+    // }
+
+    // if (data.renderMessages) {
+    //   data.messages.forEach((mes) => {
+    //     messages.appendChild(
+    //       new Message(mes.name, mes.message, mes.date).render(),
+    //     );
+    //   });
+    // }
 
   }
 
