@@ -22,62 +22,56 @@ export default class ChatWidget {
         <div class="row">
     
           <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0 border rounded-start">
-    
             <h6 class="font-weight-bold mb-3 text-center text-lg-start">Участники</h5>
-    
-            <div class="card">
-              <div class="card-body">
-    
-                <ul class="list-unstyled mb-0" data-id="users">
-                </ul>
-    
-              </div>
-            </div>
-    
+            <ul class="list-unstyled mb-0" data-id="users"></ul>
           </div>
     
           <div class="col-md-6 col-lg-7 col-xl-8 border rounded-3">
-   
             <h6 class="font-weight-bold mb-3 text-center text-lg-start">Сообщения</h5>
 
             <ul class="list-unstyled" data-id="messages">
-              <li class="d-flex justify-content-start text-left mb-1">
-                <div class="card">
-                  <div class="card-header d-flex justify-content-start p-1">
-                    <p class="fw-bold small mb-0 mx-1">Brad Pitt</p>
-                    <p class="text-muted small mb-0">12 mins ago</p>
+              <li class="d-flex justify-content-end">
+                <div class="message w-75">
+                  <div class="message-header">
+                    <div class="d-flex justify-content-end">
+                      <p class="message__user fw-bold small text-muted">Brad Pitt</p>
+                      <p class="message__data small text-muted mx-2">12 mins ago</p>
+                    </div>
+                    <div class="bg-primary rounded px-2">
+                      <p class="message__text text-small text-white text-end">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua.
+                      </p>
+                    </div>
                   </div>
-                  <div class="card-body">
-                    <p class="mb-0 text-start">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                      labore et dolore magna aliqua.
-                    </p>
+                </div>
+              </li>              
+              
+              <li class="d-flex justify-content-start">
+                <div class="message w-75">
+                  <div class="message-header">
+                    <div class="d-flex justify-content-start">
+                      <p class="message__user fw-bold small text-muted">Brad Pitt</p>
+                      <p class="message__data small text-muted mx-2">12 mins ago</p>
+                    </div>
+                    <div class="bg-light rounded px-2">
+                      <p class="message__text text-small text-white text-start">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua.
+                      </p>
+                    </div>
                   </div>
                 </div>
               </li>
-              <li class="d-flex justify-content-end mb-4">
-                <div class="card">
-                  <div class="card-header d-flex justify-content-between p-3">
-                    <p class="fw-bold mb-0">Brad Pitt</p>
-                    <p class="text-muted small mb-0"><i class="far fa-clock"></i> 10 mins ago</p>
-                  </div>
-                  <div class="card-body">
-                    <p class="mb-0">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                      labore et dolore magna aliqua.
-                    </p>
-                  </div>
-                </div>
-              </li>
-              <li class="bg-white mb-3">
-                <div class="form-outline">
-                  <textarea class="form-control" id="textAreaExample2" rows="4"></textarea>
-                  <label class="form-label" for="textAreaExample2">Message</label>
-                </div>
-              </li>
-              <button type="button" class="btn btn-info btn-rounded float-end">Send</button>
             </ul>
-    
+
+            <div class="bg-white mb-3">
+              <div class="form-outline">
+                <textarea class="form-control" id="textAreaExample2" rows="1" placeholder="Текст сообщения"></textarea>
+                <button type="button" class="btn btn-info btn-rounded mx-2">Отправить</button>
+              </div>
+            </div>
+
           </div>
     
         </div>
