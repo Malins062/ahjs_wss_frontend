@@ -38,6 +38,21 @@ module.exports = {
           MiniCssExtractPlugin.loader, 'css-loader',
         ],
       },
+      {
+        test: /.(jpg|jpeg|png|gif|pdf|ico)$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "images/[name].[ext]",
+            },
+          },
+        ],
+      },
+      // {
+      //   test: /\.(png|svg|jpg|gif)$/,
+      //   type: 'asset/resource',
+      // }, 
     ],
   },
   plugins: [
