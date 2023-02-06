@@ -86,7 +86,6 @@ display: none;
 .people-list .about {
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
     justify-content: center;
     float: left;
     padding-left: 8px;

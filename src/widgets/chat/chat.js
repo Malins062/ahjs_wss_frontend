@@ -1,5 +1,6 @@
 import './css/chat.css';
 import User from './js/user';
+import Message from './js/message';
 
 // Наименование стиля для скрытия объекта
 const STYLE_HIDDEN = 'hidden';
