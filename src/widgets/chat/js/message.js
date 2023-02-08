@@ -1,25 +1,63 @@
 const NAME_OWNER = 'Вы';
 
 export default class Message {
-  constructor(username, message, date, isOwner=false) {
-    this.username = username;
+  constructor(userName, message, date, isOwner=false) {
+    this.userName = userName;
     this.message = message;
     this.isOwner = isOwner;
     this.date = new Date(date);
   }
+//   <li class="clearfix">
+//   <div class="message-data text-right">
+//       <span class="message-data-time">10:10 AM, Today</span>
+//       <span class="message-data-user">Dady</span>
+//   </div>
+//   <div class="message other-message float-right"> Hi Aiden, how are you? How is the project coming along? </div>
+// </li>
+// <li class="clearfix">
+//   <div class="message-data">
+//       <span class="message-data-time">10:12 AM, Today</span>
+//       <span class="message-data-user">Dady</span>
+//   </div>
+//   <div class="message my-message">Are we meeting today?</div>                                    
+// </li>                               
+// <li class="clearfix">
+//   <div class="message-data">
+//       <span class="message-data-time">10:15 AM, Today</span>
+//       <span class="message-data-user">Dady</span>
+//   </div>
+//   <div class="message my-message">Project has been already finished and I have results to show you.</div>
+// </li>
 
   render() {
-    this.messageEl = document.createElement('li');
-    this.messageEl.className = 'chat__message message-chat';
-    this.messageInfoEl = document.createElement('span');
-    this.messageInfoEl.className = 'message-chat__info';
-    this.messageInfoEl.textContent = `${this.username}, ${this.formatDate()}`;
-    this.messageTextEl = document.createElement('span');
-    this.messageTextEl.className = 'message-chat__text';
-    this.messageTextEl.textContent = this.message;
+    const messageEl = document.createElement('li');
+    messageEl.className = 'clearfix';
 
-    this.messageEl.appendChild(this.messageInfoEl);
-    this.messageEl.appendChild(this.messageTextEl);
+    const messageHeader = document.createElement('div');
+    messageHeader.className = 'message-data';
+    if (this.isOwner) {
+      messageHeader.classList.add('text-right');
+    }
+
+    const messageDateTime = document.createElement('span');
+    messageDateTime.className = 'message-data-time';
+    messageDateTime.textContent = this.formatDate()
+
+    const messageUser = document.createElement('span');
+    messageUser.className = 'message-data-user';
+    messageUser.textContent = this.userName
+
+    const messageText = document.createElement('div');
+    messageText.className = 'message';
+    if (this.isOwner) {
+      messageText.classList.add('my-message');
+      messageText.classList.add('float-right');
+    } else {
+      messageText.classList.add('other-message');
+    }
+
+    this.messageEl.appendChild(messageHeader);
+    this.messageEl.appendChild(messageText);
     return this.messageEl;
   }
 
