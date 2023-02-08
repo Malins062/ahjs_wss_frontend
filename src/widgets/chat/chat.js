@@ -31,9 +31,11 @@ export default class ChatWidget {
               </div>
 
               <div class="chat-message clearfix">
-                <div class="input-group mb-0">
-                  <input type="text" class="form-control" data-id="send-message" placeholder='Введите сообщение и нажмите "Enter"...'>                                    
-                </div>
+                <form data-id="form-message">
+                  <div class="input-group mb-0">
+                    <input type="text" class="form-control" data-id="message" required placeholder='Введите сообщение и нажмите "Enter"...'>                                    
+                  </div>
+                </form>
               </div>
             </div>
             
@@ -146,7 +148,7 @@ export default class ChatWidget {
     this.dialogLogin = this.parentEl.querySelector(ChatWidget.idSelector('dialog-login'));
     this.ulUsers = this.parentEl.querySelector(ChatWidget.idSelector('users'));
     this.ulMessages = this.parentEl.querySelector(ChatWidget.idSelector('messages'));
-    this.inputMessage = this.parentEl.querySelector(ChatWidget.idSelector('send-message'));
+    this.formMessage = this.parentEl.querySelector(ChatWidget.idSelector('form-message'));
 
 
     // Строка ввода имени псевдонима
@@ -161,7 +163,7 @@ export default class ChatWidget {
 
     // Обработка событий по отправке сообщения
     this.onSendMessage = this.onSendMessage.bind(this);
-    this.inputMessage.addEventListener('keydown', (evt) => this.onSendMessage(evt));
+    this.formMessage.addEventListener('submit', (evt) => this.onSendMessage(evt));
   }
 
   wsOpen() {
@@ -252,11 +254,15 @@ export default class ChatWidget {
 
   onSendMessage(evt) {
     evt.preventDefault();
-    if (evt.keycode !== 13) {
-      return;
-    }
-    const textMessage = this.inputMessage.value;
-    this.ws.send(JSON.stringify({ userName, chooseUserName: true }));
+    const messageText = this.formMessage.querySelector(ChatWidget.idSelector('message')).value;
+    console.log(messageText);
+    this.ws.send(
+      JSON.stringify({
+        chatMessage: true,
+        messageText,
+      }),
+    );
+    evt.currentTarget.reset();
   }
 
   onChangeUserName() {

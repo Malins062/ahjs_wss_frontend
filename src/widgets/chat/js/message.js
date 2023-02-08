@@ -47,6 +47,9 @@ export default class Message {
     messageUser.className = 'message-data-user';
     messageUser.textContent = this.userName
 
+    messageHeader.appendChild(messageDateTime);
+    messageHeader.appendChild(messageUser);
+
     const messageText = document.createElement('div');
     messageText.className = 'message';
     if (this.isOwner) {
@@ -56,9 +59,9 @@ export default class Message {
       messageText.classList.add('other-message');
     }
 
-    this.messageEl.appendChild(messageHeader);
-    this.messageEl.appendChild(messageText);
-    return this.messageEl;
+    messageEl.appendChild(messageHeader);
+    messageEl.appendChild(messageText);
+    return messageEl;
   }
 
   formatDate() {
