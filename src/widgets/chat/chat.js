@@ -31,12 +31,9 @@ export default class ChatWidget {
               </div>
 
               <div class="chat-message clearfix">
-                  <div class="input-group mb-0">
-                      <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="fa fa-send"></i></span>
-                      </div>
-                      <input type="text" class="form-control" placeholder="Введите сообщение...">                                    
-                  </div>
+                <div class="input-group mb-0">
+                  <input type="text" class="form-control" data-id="send-message" placeholder='Введите сообщение и нажмите "Enter"...'>                                    
+                </div>
               </div>
             </div>
             
@@ -146,8 +143,10 @@ export default class ChatWidget {
   }
 
   init() {
-    this.ulUsers = this.parentEl.querySelector(ChatWidget.idSelector('users'));
     this.dialogLogin = this.parentEl.querySelector(ChatWidget.idSelector('dialog-login'));
+    this.ulUsers = this.parentEl.querySelector(ChatWidget.idSelector('users'));
+    this.ulMessages = this.parentEl.querySelector(ChatWidget.idSelector('messages'));
+    this.inputMessage = this.parentEl.querySelector(ChatWidget.idSelector('send-message'));
 
 
     // Строка ввода имени псевдонима
@@ -159,6 +158,10 @@ export default class ChatWidget {
     const formLogin = this.dialogLogin.querySelector(ChatWidget.idSelector('form-login'));
     this.onSubmitLogin = this.onSubmitLogin.bind(this);
     formLogin.addEventListener('submit', (evt) => this.onSubmitLogin(evt));
+
+    // Обработка событий по отправке сообщения
+    this.onSendMessage = this.onSendMessage.bind(this);
+    this.inputMessage.addEventListener('keydown', (evt) => this.onSendMessage(evt));
   }
 
   wsOpen() {
@@ -217,10 +220,10 @@ export default class ChatWidget {
       const ownMessage = new Message(
         data.name,
         data.message,
+        true,
         data.date,
       ).render();
-      ownMessage.classList.add('own-message');
-      messages.appendChild(ownMessage);
+      this.ulMessages.appendChild(ownMessage);
     }
 
     // if (data.renderMessage) {
@@ -249,6 +252,15 @@ export default class ChatWidget {
     const userName = this.inputUserName.value;
     this.ws.send(JSON.stringify({ userName, chooseUserName: true }));
     // evt.currentTarget.reset();    
+  }
+
+  onSendMessage(evt) {
+    evt.preventDefault();
+    if (evt.keycode !== 13) {
+      return;
+    }
+    const textMessage = this.inputMessage.value;
+    this.ws.send(JSON.stringify({ userName, chooseUserName: true }));
   }
 
   onChangeUserName() {
