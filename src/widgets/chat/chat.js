@@ -217,28 +217,24 @@ export default class ChatWidget {
     }
 
     if (data.renderOwnMessage) {
-      const ownMessage = new Message(
-        data.name,
-        data.message,
-        true,
-        data.date,
-      ).render();
-      this.ulMessages.appendChild(ownMessage);
+      this.ulMessages.appendChild(
+        new Message(data.name, data.message, data.date, true).render(),
+      );
     }
 
-    // if (data.renderMessage) {
-    //   messages.appendChild(
-    //     new Message(data.name, data.message, data.date).render(),
-    //   );
-    // }
+    if (data.renderMessage) {
+      this.ulMessages.appendChild(
+        new Message(data.name, data.message, data.date).render(),
+      );
+    }
 
-    // if (data.renderMessages) {
-    //   data.messages.forEach((mes) => {
-    //     messages.appendChild(
-    //       new Message(mes.name, mes.message, mes.date).render(),
-    //     );
-    //   });
-    // }
+    if (data.renderMessages) {
+      data.messages.forEach((msg) => {
+        this.ulMessages.appendChild(
+          new Message(msg.name, msg.message, msg.date).render(),
+        );
+      });
+    }
 
   }
 
