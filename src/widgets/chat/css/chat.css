@@ -151,7 +151,7 @@ display: none;
 
 .chat .chat-history .message:after {
     bottom: 100%;
-    left: 7%;
+    left: 10%;
     border: solid transparent;
     content: " ";
     height: 0;
@@ -188,7 +188,7 @@ display: none;
 
 .chat .chat-history .my-message:after {
     border-bottom-color: #e8f1f3;
-    left: 93%
+    left: calc(100% - 30px);
 }
 
 .chat .chat-message {

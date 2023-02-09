@@ -181,7 +181,7 @@ export default class ChatWidget {
   }
 
   wsMessage(message) {
-    console.log('Сообщение:', message);
+    // console.log('Сообщение:', message);
     const data = JSON.parse(message.data);
     console.log('Получены данные:', (data));
 
@@ -255,7 +255,7 @@ export default class ChatWidget {
   onSendMessage(evt) {
     evt.preventDefault();
     const messageText = this.formMessage.querySelector(ChatWidget.idSelector('message')).value;
-    console.log(messageText);
+    console.log('onSendMessage', messageText);
     this.ws.send(
       JSON.stringify({
         chatMessage: true,

@@ -7,27 +7,6 @@ export default class Message {
     this.isOwner = isOwner;
     this.date = new Date(date);
   }
-//   <li class="clearfix">
-//   <div class="message-data text-right">
-//       <span class="message-data-time">10:10 AM, Today</span>
-//       <span class="message-data-user">Dady</span>
-//   </div>
-//   <div class="message other-message float-right"> Hi Aiden, how are you? How is the project coming along? </div>
-// </li>
-// <li class="clearfix">
-//   <div class="message-data">
-//       <span class="message-data-time">10:12 AM, Today</span>
-//       <span class="message-data-user">Dady</span>
-//   </div>
-//   <div class="message my-message">Are we meeting today?</div>                                    
-// </li>                               
-// <li class="clearfix">
-//   <div class="message-data">
-//       <span class="message-data-time">10:15 AM, Today</span>
-//       <span class="message-data-user">Dady</span>
-//   </div>
-//   <div class="message my-message">Project has been already finished and I have results to show you.</div>
-// </li>
 
   render() {
     const messageEl = document.createElement('li');
@@ -36,7 +15,7 @@ export default class Message {
     const messageHeader = document.createElement('div');
     messageHeader.className = 'message-data';
     if (this.isOwner) {
-      messageHeader.classList.add('text-right');
+      messageHeader.classList.add('text-end');
     }
 
     const messageDateTime = document.createElement('span');
@@ -44,7 +23,7 @@ export default class Message {
     messageDateTime.textContent = this.formatDate()
 
     const messageUser = document.createElement('span');
-    messageUser.className = 'message-data-user';
+    messageUser.className = 'message-data-user px-1';
     messageUser.textContent = this.userName
 
     messageHeader.appendChild(messageDateTime);
@@ -58,6 +37,7 @@ export default class Message {
     } else {
       messageText.classList.add('other-message');
     }
+    messageText.textContent = this.message;
 
     messageEl.appendChild(messageHeader);
     messageEl.appendChild(messageText);
