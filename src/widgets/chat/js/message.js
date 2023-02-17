@@ -5,7 +5,9 @@ export default class Message {
     this.userName = userName;
     this.message = message;
     this.isOwner = isOwner;
-    this.date = new Date(date);
+    console.log('class Message constructor:', userName, message, date);
+    this.date = Message.getFormattedDateTime(date);
+    console.log(this.date);
   }
 
   render() {
@@ -20,7 +22,7 @@ export default class Message {
 
     const messageDateTime = document.createElement('span');
     messageDateTime.className = 'message-data-time';
-    messageDateTime.textContent = this.formatDate()
+    messageDateTime.textContent = this.date;
 
     const messageUser = document.createElement('span');
     messageUser.className = 'message-data-user px-1';
@@ -44,20 +46,20 @@ export default class Message {
     return messageEl;
   }
 
-  formatDate() {
-    const day = this.date.getDate() < 10
-      ? `0${this.date.getDate()}`
-      : this.date.getDate();
-    const month = this.date.getMonth() < 10
-      ? `0${this.date.getMonth() + 1}`
-      : this.date.getMonth();
-    const year = String(this.date.getFullYear()).slice(-2);
-    const hour = this.date.getHours() < 10
-      ? `0${this.date.getHours()}`
-      : this.date.getHours();
-    const minute = this.date.getMinutes() < 10
-      ? `0${this.date.getMinutes()}`
-      : this.date.getMinutes();
+  static getFormattedDateTime(date) {
+    const day = date.getDate() < 10
+      ? `0${date.getDate()}`
+      : date.getDate();
+    const month = date.getMonth() < 10
+      ? `0${date.getMonth() + 1}`
+      : date.getMonth();
+    const year = String(date.getFullYear()).slice(-2);
+    const hour = date.getHours() < 10
+      ? `0${date.getHours()}`
+      : date.getHours();
+    const minute = date.getMinutes() < 10
+      ? `0${date.getMinutes()}`
+      : date.getMinutes();
     const formattedDate = `${hour}:${minute} ${day}.${month}.${year}`;
 
     return formattedDate;

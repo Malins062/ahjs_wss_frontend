@@ -18,7 +18,7 @@ export default class ChatWidget {
   static get formChatHTML() {
     return `
       <div class="row clearfix">
-        <div class="col-lg-12">
+        <div class="col-lg-12 container-fluid">
           <div class="card chat-app">
             
             <div class="people-list">
@@ -231,6 +231,7 @@ export default class ChatWidget {
     }
 
     if (data.renderMessages) {
+      console.log('on data.renderMessages: ', data)
       data.messages.forEach((msg) => {
         this.ulMessages.appendChild(
           new Message(msg.name, msg.message, msg.date).render(),
