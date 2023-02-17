@@ -6,7 +6,7 @@ export default class Message {
     this.message = message;
     this.isOwner = isOwner;
     console.log('class Message constructor:', userName, message, date);
-    this.date = Message.getFormattedDateTime(date);
+    this.date = date;
     console.log(this.date);
   }
 
@@ -44,24 +44,5 @@ export default class Message {
     messageEl.appendChild(messageHeader);
     messageEl.appendChild(messageText);
     return messageEl;
-  }
-
-  static getFormattedDateTime(date) {
-    const day = date.getDate() < 10
-      ? `0${date.getDate()}`
-      : date.getDate();
-    const month = date.getMonth() < 10
-      ? `0${date.getMonth() + 1}`
-      : date.getMonth();
-    const year = String(date.getFullYear()).slice(-2);
-    const hour = date.getHours() < 10
-      ? `0${date.getHours()}`
-      : date.getHours();
-    const minute = date.getMinutes() < 10
-      ? `0${date.getMinutes()}`
-      : date.getMinutes();
-    const formattedDate = `${hour}:${minute} ${day}.${month}.${year}`;
-
-    return formattedDate;
   }
 }
