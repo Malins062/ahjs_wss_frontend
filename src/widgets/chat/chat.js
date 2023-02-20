@@ -18,7 +18,7 @@ export default class ChatWidget {
   static get formChatHTML() {
     return `
       <div class="row clearfix">
-        <div class="col-lg-12 container-fluid">
+        <div class="col-lg-12 h-100">
           <div class="card chat-app">
             
             <div class="people-list">

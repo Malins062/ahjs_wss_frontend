@@ -26,10 +26,10 @@ export default class Message {
 
     const messageUser = document.createElement('span');
     messageUser.className = 'message-data-user px-1';
-    messageUser.textContent = this.userName
+    messageUser.textContent = this.userName;
 
-    messageHeader.appendChild(messageDateTime);
     messageHeader.appendChild(messageUser);
+    messageHeader.appendChild(messageDateTime);
 
     const messageText = document.createElement('div');
     messageText.className = 'message';
