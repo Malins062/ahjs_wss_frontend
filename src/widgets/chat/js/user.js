@@ -3,7 +3,7 @@ import AVATAR from '../img/avatar.png';
 const NAME_OWNER = 'Вы';
 
 export default class User {
-  constructor(name, isOwner=false) {
+  constructor(name, isOwner = false) {
     this.userName = name;
     this.isOwner = isOwner;
   }
@@ -11,9 +11,9 @@ export default class User {
   render() {
     const liEl = document.createElement('li');
     liEl.className = 'clearfix user';
-    if  (this.isOwner) {
+    if (this.isOwner) {
       liEl.classList.add('active');
-    };
+    }
 
     const avatarEl = document.createElement('img');
     avatarEl.src = AVATAR;

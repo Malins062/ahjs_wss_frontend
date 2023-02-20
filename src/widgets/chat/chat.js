@@ -107,24 +107,24 @@ export default class ChatWidget {
     if (this.ws) {
       this.ws.close(3001);
     } else {
-      this.ws = new WebSocket(this.urlWebSocket);      
+      this.ws = new WebSocket(this.urlWebSocket);
 
       this.wsOpen = this.wsOpen.bind(this);
       this.ws.addEventListener('open', this.wsOpen);
 
       this.wsClose = this.wsClose.bind(this);
       this.ws.addEventListener('close', (evt) => this.wsClose(evt));
-      
+
       this.wsMessage = this.wsMessage.bind(this);
       this.ws.addEventListener('message', (message) => this.wsMessage(message));
-      
+
       this.wsError = this.wsError.bind(this);
-      this.ws.addEventListener('error', (evt) => this.wsError(evt));      
+      this.ws.addEventListener('error', (evt) => this.wsError(evt));
     }
   }
 
   // Запуск виджета
-  run() {    
+  run() {
     // Отрисовка HTML
     this.bindToDOM();
 
@@ -150,7 +150,6 @@ export default class ChatWidget {
     this.ulMessages = this.parentEl.querySelector(ChatWidget.idSelector('messages'));
     this.formMessage = this.parentEl.querySelector(ChatWidget.idSelector('form-message'));
 
-
     // Строка ввода имени псевдонима
     this.inputUserName = this.parentEl.querySelector(ChatWidget.idSelector('username'));
     this.onChangeUserName = this.onChangeUserName.bind(this);
@@ -172,12 +171,13 @@ export default class ChatWidget {
 
   wsClose(evt) {
     if (evt.wasClean) {
-      console.log('Соединение закрыто.');
+      console.log('Соединение закрыто.'); // eslint-disable-line no-console
+
       this.ws = null;
     } else {
-      console.log('Обрыв соединения!');
+      console.log('Обрыв соединения!'); // eslint-disable-line no-console
     }
-    console.log(`Код: ${evt.code}; причина: ${evt.reason}`);
+    console.log(`Код: ${evt.code}; причина: ${evt.reason}`); // eslint-disable-line no-console
   }
 
   wsMessage(message) {
@@ -231,18 +231,17 @@ export default class ChatWidget {
     }
 
     if (data.renderMessages) {
-      console.log('on data.renderMessages: ', data)
+      console.log('on data.renderMessages: ', data);
       data.messages.forEach((msg) => {
         this.ulMessages.appendChild(
           new Message(msg.name, msg.message, msg.date).render(),
         );
       });
     }
-
   }
 
   wsError(evt) {
-    console.log(`Ошибка: ${evt.message}`);
+    console.log(`${this} Ошибка: ${evt.message}`); // eslint-disable-line no-console
   }
 
   onSubmitLogin(evt) {
@@ -250,7 +249,7 @@ export default class ChatWidget {
     // console.log(this.inputUserName)
     const userName = this.inputUserName.value;
     this.ws.send(JSON.stringify({ userName, chooseUserName: true }));
-    // evt.currentTarget.reset();    
+    // evt.currentTarget.reset();
   }
 
   onSendMessage(evt) {
@@ -271,5 +270,4 @@ export default class ChatWidget {
       this.inputUserName.classList.remove(STYLE_IS_INVALID);
     }
   }
-
 }

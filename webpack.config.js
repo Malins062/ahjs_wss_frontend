@@ -42,9 +42,9 @@ module.exports = {
         test: /.(jpg|jpeg|png|gif|pdf|ico)$/,
         use: [
           {
-            loader: "file-loader",
+            loader: 'file-loader',
             options: {
-              name: "images/[name].[ext]",
+              name: 'images/[name].[ext]',
             },
           },
         ],
@@ -52,7 +52,7 @@ module.exports = {
       // {
       //   test: /\.(png|svg|jpg|gif)$/,
       //   type: 'asset/resource',
-      // }, 
+      // },
     ],
   },
   plugins: [
