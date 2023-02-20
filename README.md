@@ -13,7 +13,7 @@
 
 ## Чат (клиентская часть)
 
-[![Build status](https://ci.appveyor.com/api/projects/status/uij08g676ylbsvnb/branch/main?svg=true)](https://ci.appveyor.com/project/Malins062/ahjs-wss-backend/branch/main)
+[![Build status](https://ci.appveyor.com/api/projects/status/jrj46h1qd7dcfq10/branch/main?svg=true)](https://ci.appveyor.com/project/Malins062/ahjs-wss-frontend/branch/main)
 
 ### Легенда
 
