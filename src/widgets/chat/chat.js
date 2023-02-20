@@ -19,10 +19,10 @@ export default class ChatWidget {
     return `
       <div class="row clearfix">
         <div class="col-lg-12 h-100">
-          <div class="card chat-app">
+          <div class="card chat-app h-100">
             
-            <div class="people-list">
-              <ul class="list-unstyled chat-list mt-2 mb-0" data-id="users"></ul>
+            <div class="people-list h-100">
+              <ul class="chat-list list-unstyled h-100 mt-2 mb-0" data-id="users"></ul>
             </div>
 
             <div class="chat">
