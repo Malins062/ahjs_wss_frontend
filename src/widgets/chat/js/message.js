@@ -24,7 +24,7 @@ export default class Message {
 
     const messageUser = document.createElement('span');
     messageUser.className = 'msg_user';
-    messageUser.textContent = this.userName;
+    messageUser.textContent = this.userName + ', ';
 
     messageHeader.appendChild(messageUser);
     messageHeader.appendChild(messageDateTime);
