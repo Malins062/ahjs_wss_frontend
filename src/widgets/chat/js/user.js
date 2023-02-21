@@ -10,21 +10,21 @@ export default class User {
 
   render() {
     const liEl = document.createElement('li');
-    liEl.className = 'chat_list';
+    liEl.className = 'user_item';
     if (this.isOwner) {
-      liEl.classList.add('active_chat');
+      liEl.classList.add('active_user');
     }
 
     const divEl = document.createElement('div');
-    divEl.className = 'chat_people';
+    divEl.className = 'user';
 
     const divImgEl = document.createElement('div');
-    divImgEl.className = 'chat_img';
+    divImgEl.className = 'user_image';
     const avatarEl = document.createElement('img');
     avatarEl.src = AVATAR;
 
     const divIbEl = document.createElement('div');
-    divIbEl.className = 'chat_img';
+    divIbEl.className = 'user_name';
     const userNameEl = document.createElement('h5');
     userNameEl.textContent = this.isOwner ? NAME_OWNER : this.userName;
     avatarEl.alt = userNameEl.textContent;
