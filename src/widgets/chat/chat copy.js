@@ -17,69 +17,31 @@ export default class ChatWidget {
 
   static get formChatHTML() {
     return `
-      <div class="messaging">
-        <div class="inbox_msg">
-          <div class="left_side">
-            <div class="heading_panel">
-              <div class="recent_heading">
-                <h4>Участники</h4>
-              </div>
+      <div class="row clearfix">
+        <div class="col-lg-12 h-100">
+          <div class="card chat-app h-100">
+            
+            <div class="people-list h-100">
+              <ul class="chat-list list-unstyled h-100 mt-2 mb-0" data-id="users"></ul>
             </div>
 
-            <ul class="list-unstyled users_list">
-                <li class="chat_list active_chat">
-                <div class="chat_people">
-                  <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="avatar"> </div>
-                  <div class="chat_ib">
-                    <h5>Sunil Rajput</h5>
-                  </div>
-                </div>
-              </li>
-              <li class="chat_list">
-                <div class="chat_people">
-                  <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                  <div class="chat_ib">
-                    <h5>ТУПИК</h5>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
+            <div class="chat">
+              <div class="chat-history">
+                <ul class="mb-0" data-id="messages"></ul>
+              </div>
 
-          <div class="right_side">
-            <div class="heading_panel">
-              <div class="recent_heading">
-                <h4>Сообщения</h4>
+              <div class="chat-message clearfix">
+                <form data-id="form-message">
+                  <div class="input-group mb-0">
+                    <input type="text" class="form-control" data-id="message" required placeholder='Введите сообщение и нажмите "Enter"...'>                                    
+                  </div>
+                </form>
               </div>
             </div>
-
-            <div class="messages">
-              <ul class="msg_history list-unstyled">
-                <li class="incoming_msg">
-                  <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                  <div class="received_msg">
-                    <div class="received_withd_msg">
-                      <p>Test which is a new approach to have all
-                        solutions</p>
-                      <span class="time_date"> 11:01 AM    |    June 9</span></div>
-                  </div>
-                </li>
-                <li class="outgoing_msg">
-                  <div class="sent_msg">
-                    <p>Test which is a new approach to have all
-                      solutions</p>
-                    <span class="time_date"> 11:01 AM    |    June 9</span> </div>
-                </li>
-              </ul>
-              <div class="type_msg">
-                <div class="input_msg_write">
-                  <input type="text" class="write_msg" placeholder="Type a message" />
-                </div>
-              </div>
-            </div>
+            
           </div>
         </div>
-      </div>    
+      </div>
     `;
   }
 
@@ -178,7 +140,7 @@ export default class ChatWidget {
     this.parentEl.innerHTML = '';
     this.parentEl.innerHTML += ChatWidget.loadingHTML;
     this.parentEl.innerHTML += ChatWidget.formErrorHTML;
-    // this.parentEl.innerHTML += ChatWidget.formLoginHTML;
+    this.parentEl.innerHTML += ChatWidget.formLoginHTML;
     this.parentEl.innerHTML += ChatWidget.formChatHTML;
   }
 

@@ -10,29 +10,32 @@ export default class User {
 
   render() {
     const liEl = document.createElement('li');
-    liEl.className = 'clearfix user';
+    liEl.className = 'chat_list';
     if (this.isOwner) {
-      liEl.classList.add('active');
+      liEl.classList.add('active_chat');
     }
 
+    const divEl = document.createElement('div');
+    divEl.className = 'chat_people';
+
+    const divImgEl = document.createElement('div');
+    divImgEl.className = 'chat_img';
     const avatarEl = document.createElement('img');
     avatarEl.src = AVATAR;
 
-    const aboutEl = document.createElement('div');
-    aboutEl.className = 'about';
+    const divIbEl = document.createElement('div');
+    divIbEl.className = 'chat_img';
+    const userNameEl = document.createElement('h5');
+    userNameEl.textContent = this.isOwner ? NAME_OWNER : this.userName;
+    avatarEl.alt = userNameEl.textContent;
 
-    const userNameEl = document.createElement('div');
-    userNameEl.className = 'name';
-    if (this.isOwner) {
-      userNameEl.textContent = NAME_OWNER;
-      userNameEl.classList.add('fw-bold');
-    } else {
-      userNameEl.textContent = this.userName;
-    }
+    divImgEl.appendChild(avatarEl);
+    divIbEl.appendChild(userNameEl);
 
-    aboutEl.appendChild(userNameEl);
-    liEl.appendChild(avatarEl);
-    liEl.appendChild(aboutEl);
+    divEl.appendChild(divImgEl);
+    divEl.appendChild(divIbEl);
+
+    liEl.appendChild(divEl);
     return liEl;
   }
 }
