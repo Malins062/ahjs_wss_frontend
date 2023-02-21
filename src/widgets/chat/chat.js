@@ -25,25 +25,7 @@ export default class ChatWidget {
                 <h4>Участники</h4>
               </div>
             </div>
-
-            <ul class="list-unstyled users_list" data-id="users">
-              <li class="user_item active_user">
-                <div class="user">
-                  <div class="user_image"> <img src="https://ptetutorials.com/images/user-profile.png" alt="avatar"> </div>
-                  <div class="user_name">
-                    <h5>Sunil Rajput</h5>
-                  </div>
-                </div>
-              </li>
-              <li class="user_item">
-                <div class="user">
-                  <div class="user_image"> <img src="https://ptetutorials.com/images/user-profile.png" alt="avatar"> </div>
-                  <div class="user_name">
-                    <h5>Sunil Rajput</h5>
-                  </div>
-                </div>
-              </li>
-            </ul>
+            <ul class="list-unstyled users_list" data-id="users"></ul>
           </div>
 
           <div class="right_side">
@@ -52,42 +34,11 @@ export default class ChatWidget {
                 <h4>Сообщения</h4>
               </div>
             </div>
-
             <div class="messages">
-              <ul class="msg_history list-unstyled" data-id="messages">
-                <li class="incoming_msg">
-                  <div class="received_msg">
-                    <div class="msg_header">
-                      <span class="msg_date_time">Вы</span>
-                      <span class="msg_user">02.02.2023 11:23:22</span>
-                    </div>
-                    <p class="msg_text">Test which is a new approach to have all solutions. Test which is a new approach to have all solutions</p>
-                  </div>
-                </li>
-                <li class="outgoing_msg">
-                  <div class="sent_msg">
-                    <div class="msg_header">
-                      <span class="msg_date_time">Вы</span>
-                      <span class="msg_user">02.02.2023 11:23:22</span>
-                    </div>
-                    <p class="msg_text">Test which is a new approach to have all solutions. Test which is a new approach to have all solutions</p>
-                  </div>
-                </li>
-                <li class="outgoing_msg">
-                  <div class="sent_msg">
-                    <div class="msg_header">
-                      <span class="msg_date_time">Вы</span>
-                      <span class="msg_user">02.02.2023 11:23:22</span>
-                    </div>
-                    <p class="msg_text">Test have all solutions</p>
-                  </div>
-                </li>
-              </ul>
+              <ul class="msg_history list-unstyled" data-id="messages"></ul>
               <div class="type_msg">
                 <form data-id="form-message">
-                  <div class="input_msg_write">
-                    <input type="text" class="write_msg"  data-id="message" placeholder='Введите сообщение и нажмите "Enter"...' />
-                  </div>
+                  <input type="text" data-id="message" placeholder='Введите сообщение и нажмите "Enter"...' />
                 </form>
               </div>
             </div>
@@ -192,7 +143,7 @@ export default class ChatWidget {
     this.parentEl.innerHTML = '';
     this.parentEl.innerHTML += ChatWidget.loadingHTML;
     this.parentEl.innerHTML += ChatWidget.formErrorHTML;
-    // this.parentEl.innerHTML += ChatWidget.formLoginHTML;
+    this.parentEl.innerHTML += ChatWidget.formLoginHTML;
     this.parentEl.innerHTML += ChatWidget.formChatHTML;
   }
 
