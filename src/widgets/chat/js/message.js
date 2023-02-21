@@ -10,7 +10,7 @@ export default class Message {
 
   render() {
     const messageEl = document.createElement('li');
-    messageEl.className = this.isOwner ? 'outgoing_msg' : 'incoming_msg' 
+    messageEl.className = this.isOwner ? 'outgoing_msg' : 'incoming_msg';
 
     const divMessage = document.createElement('div');
     divMessage.className = 'msg';
@@ -24,7 +24,7 @@ export default class Message {
 
     const messageUser = document.createElement('span');
     messageUser.className = 'msg_user';
-    messageUser.textContent = this.userName + ', ';
+    messageUser.textContent = `${this.userName}, `;
 
     messageHeader.appendChild(messageUser);
     messageHeader.appendChild(messageDateTime);

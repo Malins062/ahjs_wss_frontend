@@ -169,7 +169,7 @@ export default class ChatWidget {
   }
 
   wsOpen() {
-    console.log(`Соединение установлено. URL: ${this.urlWebSocket}`);
+    console.log(`Соединение установлено. URL: ${this.urlWebSocket}`); // eslint-disable-line no-console
   }
 
   wsClose(evt) {
@@ -186,7 +186,7 @@ export default class ChatWidget {
   wsMessage(message) {
     // console.log('Сообщение:', message);
     const data = JSON.parse(message.data);
-    console.log('Получены данные:', (data));
+    // console.log('Получены данные:', (data));
 
     // Отрисовка всех текущих пользователей
     if (data.renderUsers) {
@@ -234,7 +234,7 @@ export default class ChatWidget {
     }
 
     if (data.renderMessages) {
-      console.log('on data.renderMessages: ', data);
+      // console.log('on data.renderMessages: ', data);
       data.messages.forEach((msg) => {
         this.ulMessages.appendChild(
           new Message(msg.name, msg.message, msg.date).render(),
@@ -258,7 +258,7 @@ export default class ChatWidget {
   onSendMessage(evt) {
     evt.preventDefault();
     const messageText = this.formMessage.querySelector(ChatWidget.idSelector('message')).value;
-    console.log('onSendMessage', messageText);
+    // console.log('onSendMessage', messageText);
     this.ws.send(
       JSON.stringify({
         chatMessage: true,
