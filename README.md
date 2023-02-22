@@ -11,7 +11,7 @@
 
 ---
 
-## Чат (клиентская часть)
+## [Чат (клиентская часть)](https://malins062.github.io/ahjs_wss_frontend/ "Сервер чата развернут на Render")
 
 [![Build status](https://ci.appveyor.com/api/projects/status/jrj46h1qd7dcfq10/branch/main?svg=true)](https://ci.appveyor.com/project/Malins062/ahjs-wss-frontend/branch/main)
 
