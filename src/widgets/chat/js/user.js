@@ -26,6 +26,7 @@ export default class User {
     const divIbEl = document.createElement('div');
     divIbEl.className = 'user_name';
     const userNameEl = document.createElement('h5');
+    userNameEl.className = 'user__name';
     userNameEl.textContent = this.isOwner ? NAME_OWNER : this.userName;
     avatarEl.alt = userNameEl.textContent;
 
